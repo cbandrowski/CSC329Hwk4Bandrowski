@@ -201,38 +201,5 @@ public class MyGraph {
         return mst;
     }
 
-
-
-    /**
-     * Perform a breadth-first traversal from startVertex looking for endVertex
-     * @param startVertex
-     * @param endVertex
-     */
-    public boolean breadthFirstSearch(int startVertex, int endVertex) {
-        boolean found = false;
-
-        Set<Integer> marked = new HashSet<>();
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(startVertex);
-        marked.add(startVertex);
-
-        while(!queue.isEmpty() && !found) {
-            int v = queue.remove();
-
-            if(v == endVertex) {
-                found = true;
-            }else{
-                for (Edge e : adjacencyList.get(v)) {
-                    int w = (e.v1 == v ? e.v2 : e.v1);
-                    if(!marked.contains(w)) {
-                        queue.add(w);
-                        marked.add(w);
-                    }
-                }
-            }
-        }
-        return found;
-    }
-
 }
 
