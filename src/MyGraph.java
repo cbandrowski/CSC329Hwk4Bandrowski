@@ -126,13 +126,82 @@ public class MyGraph {
          }
         return connectedComponents;
     }
-
-    public static MyGraph minimumSpanningTree(MyGraph g, int startingVertex){
-
-    }
+    /**
+     * getMinFrontierEdge
+     * gets min-weight of edge in Graph
+     * @param g
+     * @param visited
+     * @return
+     */
     public static Edge getMinFrontierEdge(MyGraph g, boolean[] visited){
+        // minEdge = (0,0,Infinite)
+        Edge minEdge = new Edge(0,0,Integer.MAX_VALUE);
+        //For all vertices in graph (call current vertex v)
+        for(int v : g.vertices){
+            //if (visited[v] is true)
+            if(visited[v]){
+                //Get adjList for v
+                List<Edge> adj = g.adjacencyList.get(v);
+                //For all edges e in v's adjList
+                for(Edge e : adj){
+                    int unvisited = (e.v1 == v ? e.v2 : e.v1);
+                    //if (one of e's vertices is visited and the other is not)
+                    // && (e.weight < minEdge.weight))
+                    if(!visited[unvisited] && (minEdge.weight > e.weight)){
+                        //Set minEdge to e
+                        minEdge = e;
+                    }
+                }
 
+            }
+        }
+        // return minEdge
+        return minEdge;
     }
+    /**
+     * minimumSpanningTree
+     * Builds MST of g using the starting vertex
+     * @param g
+     * @param startingVertex
+     * @return
+     */
+    public static MyGraph minimumSpanningTree(MyGraph g, int startingVertex){
+        //Create a visited array of Boolean and set all elements to false.
+        int n = g.vertices.size();
+        boolean[] visited = new boolean[n];
+
+        //Add all vertices to the MST
+        MyGraph mst = new MyGraph();
+        for(int v :g.vertices){
+            mst.addVertex(v);
+        }
+        //Pick any vertex to be the starting vertex of the MST.
+        //Set visited[startVertex] to true
+        visited[startingVertex] = true;
+        int visitedCount =1;
+        //While (there is an unvisited vertex)
+        while(visitedCount < n) {
+            //Set minEdge to GetMinFrontierEdge()
+            Edge minEdge = getMinFrontierEdge(g, visited);
+            //Set visited[minEdge.source] to true
+            if (!visited[minEdge.v1]) {
+                visited[minEdge.v1] = true;
+                visitedCount++;
+            }
+            //Set visited[minEdge.dest] to true
+            if (!visited[minEdge.v2]) {
+                visited[minEdge.v2] = true;
+                visitedCount++;
+            }
+            //Add minEdge to MST
+            mst.addEdge(minEdge.v1, minEdge.v2, minEdge.weight);
+
+        }
+        //return MST
+        return mst;
+    }
+
+
 
     /**
      * Perform a breadth-first traversal from startVertex looking for endVertex
