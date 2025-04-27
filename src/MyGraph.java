@@ -275,7 +275,7 @@ public class MyGraph {
             for (Edge e : g.adjacencyList.get(currV)) {
                 int nVertex = (e.v1 == currV ? e.v2 : e.v1);
                 //Set possibleDist to (distance[currV] + weight of edge to n)
-                int possibleDist = dist[nVertex] + e.weight;
+                int possibleDist = dist[currV] + e.weight;
                 //if possibleDist < dist[n]
                 if (possibleDist < dist[nVertex]) {
                     //Set dist[n] to possibleDist
