@@ -63,7 +63,14 @@ public class MyGraph {
         }
         return false;
     }
-
+    /**
+     * getVertices
+     * pull all vertices
+     *
+     */
+    public List<Integer> getVertices() {
+        return vertices;
+    }
 
     /**
      * showGraph
@@ -278,10 +285,18 @@ public class MyGraph {
                 }
             }
         }
-        for (int i : g.vertices) {
-            System.out.println("Vertex " + i + ", dist " + dist[i] + ", previous " + previous[i]);
-        }
+        g.showGraph();
+        System.out.println("Shortest path from \n" + "Starting V›ertex    : " + startingVertex + "\n");
+        System.out.println("Vertex Dist");
+        for(int v: g.vertices){
+            System.out.printf("%-8d%d\n", v, dist[v]);
 
+        }
+        System.out.println("Vertex Previous");
+        for(int v: g.vertices){
+            System.out.printf("%-8d%d\n", v, previous[v]);
+
+        }
     }
 
     }
